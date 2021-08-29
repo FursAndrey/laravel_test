@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Logic\ReferenceBook;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Logic\ReferenceLogic;
@@ -19,7 +21,13 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('/calc', function () {
-    return view('calc_form', ['typesEO' => ReferenceLogic::getListTypeEO()]);
+    return view(
+        'calc_form', 
+        [
+            'typesEO' => ReferenceLogic::getListTypeEO(),
+            'typeProt' => ReferenceLogic::getProtLiat()
+        ]
+    );
 })->name('calc-form');
 
 Route::post('/calc/start', 'CalcController@submit')->name('calc-start');

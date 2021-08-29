@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CalcRequest;
 
 use App\Http\Logic\CalcLogic;
+use App\Http\Logic\ReferenceLogic;
 
 class CalcController extends Controller
 {
@@ -23,8 +24,8 @@ class CalcController extends Controller
 				'systemData' => CalcLogic::getDataSystem(),
 				'initialData' => [
 					'power' => $power,
-					'typeEO' => $typeEO,
-					'typeProt'=> $typeProt
+					'typeEO' => ReferenceLogic::getListTypeEO()[$typeEO],
+					'typeProt'=> ReferenceLogic::getProtLiat()[$typeProt]
 				],
 				'result' => [
 					'amperageEO' => $amperageEO,

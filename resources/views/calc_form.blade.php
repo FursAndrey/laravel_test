@@ -24,8 +24,9 @@
 				@endforeach
 			</select>
 			<select name="typeProt" id="typeProt" class="form-control">
-				<option value="1">Автоматический выключатель</option>
-				<option value="2">Плавкий предохранитель</option>
+				@foreach ($typeProt AS $id => $prot)
+					<option value="{{$id}}">{{($prot)}}</option>
+				@endforeach
 			</select>
 			<button type="submit" class="btn btn-success mt-3">Рассчитать</button>
 			@csrf

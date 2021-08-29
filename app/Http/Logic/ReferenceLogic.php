@@ -60,4 +60,11 @@ final class ReferenceLogic extends ReferenceBook
 		}
 		return 0;
 	}
+
+	/**	Получить список типов аппаратов защиты
+	 * 	@return array - список типов аппаратов защиты
+	 */
+	public static function getProtLiat():array {
+		return self::TYPE_PROT;
+	}
 }

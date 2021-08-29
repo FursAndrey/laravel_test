@@ -8,16 +8,20 @@
 		<p>Параметры системы:</p>
 		<p>Напряжение сети 3Ф/1Ф - {{$systemData}}кВ</p>
 	</div>
-	<div class="p-3 mb-2 bg-info text-white">
-		<p>Исходные данные:</p>
-		<p>Мощность - {{$initialData['power']}}кВт</p>
-		<p>Тип оборудования - {{$initialData['typeEO']}}</p>
-		<p>Тип защиты - {{$initialData['typeProt']}}</p>
-	</div>
-	<div class="p-3 mb-2 bg-success text-white">
-		<p>Результат:</p>
-		<p>Расчетная сила тока - {{$result['amperageEO']}}A</p>
-		<p>Cила тока аппарата защиты - {{$result['amperageProtection']}}A</p>
+	<div class="pt-3 pb-3 mb-2 bg-success text-white row" style="margin-left: 0; margin-right: 0;">
+		<div class="col-3 d-inline-block" >
+			<p><b>Тип защиты:</b> {{$initialData['typeProt']}}</p>
+			<p><b>Cила тока аппарата защиты:</b> {{$result['amperageProtection']}}A</p>
+		</div>
+		<div class="col-2 d-inline-block" >
+			<p><b>Тип линии:</b> ???</p>
+			<p><b>Cила тока линии:</b> ???</p>
+		</div>
+		<div class="col-7 d-inline-block" >
+			<p><b>Тип оборудования:</b> {{$initialData['typeEO']}}</p>
+			<p><b>Мощность:</b> {{$initialData['power']}}кВт</p>
+			<p><b>Расчетная сила тока:</b> {{$result['amperageEO']}}A</p>
+		</div>
 	</div>
 	<!--pre>
 		{{print_r($result)}}
