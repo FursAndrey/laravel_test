@@ -67,4 +67,43 @@ final class ReferenceLogic extends ReferenceBook
 	public static function getProtLiat():array {
 		return self::TYPE_PROT;
 	}
+
+	/** расчет кабельной линии
+	 * 	@param float $I - рачетная сила тока для кабеля
+	 * 	@param string $material - материал линии ('Cu' - медь, 'Al' - аллюминий)
+	 * 
+	 * 	@return array - параметры линии 
+	 * 					[
+	 * 						'countParalelLine' => кол-во парал. кабелей,
+	 * 						'iLine' => номинальный ток 1 кабеля,
+	 * 						'sLine' => сечение 1 кабеля
+	 * 					]
+	 */
+	public static function getLineParams($I, $material = 'Cu') {
+		//подбираем сечение кабеля по току - минимальный больше номинального тока ЭО
+		//цикл для расчета количества паралельных проводников
+		$countParalelLine = 0;
+		do {
+			++$countParalelLine;
+			if ($countParalelLine == 4) break;
+			//подбираем сечение кабеля по току - минимальный больше номинального тока ЭО
+			$index = 0;
+			//цикл для выбора сечения проводника
+			do {
+				if ($index == count(self::KABEL_PVH)) break;
+				$iLine = self::KABEL_PVH[$index][$material];
+
+				++$index;
+
+			} while ($I/$countParalelLine > $iLine);
+			--$index;
+
+		} while ($I > self::KABEL_PVH[$index][$material] * $countParalelLine);
+
+		return [
+			'countParalelLine' => $countParalelLine, 
+			'iLine' => $iLine, 
+			'sLine' => self::KABEL_PVH[$index]['s']
+		];
+    }
 }

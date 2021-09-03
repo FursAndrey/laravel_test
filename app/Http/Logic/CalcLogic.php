@@ -120,6 +120,24 @@ final class CalcLogic
 	private static function amperage1F(float $P, float $cos):float {
 		return round($P/(self::VOLTAGE_1F*$cos), 1);
 	}
+	
+	/** расчет кабельной линии
+	 * 	@param float $I - рачетная сила тока для кабеля
+	 * 	@param string $material - материал линии ('Cu' - медь, 'Al' - аллюминий)
+	 * 
+	 * 	@return array - параметры линии 
+	 * 					[
+	 * 						'countParalelLine' => кол-во парал. кабелей,
+	 * 						'iLine' => номинальный ток 1 кабеля,
+	 * 						'sLine' => сечение 1 кабеля,
+	 * 						'material' => материал кабеля
+	 * 					]
+	 */
+	public static function getLineParams($I, $material = 'Cu') {
+		$result = ReferenceLogic::getLineParams($I, $material);
+		$result['material'] = $material;
+		return $result;
+	}
 }
 
 /*

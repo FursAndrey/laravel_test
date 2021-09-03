@@ -7,9 +7,7 @@ use App\Http\Logic\CalcLogic;
 
 class CalcLogicTest extends TestCase
 {
-	/**
-	 * @return void
-	 */
+	/** @return void */
 	public function testAmperage()
 	{
 		//станки
@@ -36,5 +34,13 @@ class CalcLogicTest extends TestCase
 		//предохранители
 		$this->assertEquals(50, CalcLogic::amperageProtection(15.7, 2));
 		$this->assertEquals(0, CalcLogic::amperageProtection(51.8, 2));
+	}
+	
+	/** @return void */
+	public function testLineParams() {
+		$this->assertEquals(
+			['countParalelLine' => 1, 'iLine' => 19, 'sLine' => 1.5, 'material' => 'Cu'], 
+			CalcLogic::getLineParams(16, 'Cu')
+		);
 	}
 }

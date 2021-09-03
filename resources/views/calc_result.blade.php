@@ -13,11 +13,13 @@
 			<p><b>Тип защиты:</b> {{$initialData['typeProt']}}</p>
 			<p><b>Cила тока аппарата защиты:</b> {{$result['amperageProtection']}}A</p>
 		</div>
-		<div class="col-2 d-inline-block" >
-			<p><b>Тип линии:</b> ???</p>
-			<p><b>Cила тока линии:</b> ???</p>
+		<div class="col-3 d-inline-block" >
+			<p><b>Материал линии:</b> {{$result['lineParams']['material']}} </p>
+			<p><b>Кол-во кабелей линии:</b> {{$result['lineParams']['countParalelLine']}} </p>
+			<p><b>Номинальный ток 1 кабеля:</b> {{$result['lineParams']['iLine']}}А </p>
+			<p><b>Сечение 1 кабеля:</b> {{$result['lineParams']['sLine']}}мм<span class="super">2</span></p>
 		</div>
-		<div class="col-7 d-inline-block" >
+		<div class="col-6 d-inline-block" >
 			<p><b>Тип оборудования:</b> {{$initialData['typeEO']}}</p>
 			<p><b>Мощность:</b> {{$initialData['power']}}кВт</p>
 			<p><b>Расчетная сила тока:</b> {{$result['amperageEO']}}A</p>

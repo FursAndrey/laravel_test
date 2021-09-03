@@ -18,15 +18,22 @@
 		<div class="form-group">
 			<label for="power">Введите мощность оборудования</label>
 			<input type="text" name="power" id="power" class="form-control mb-1">
-			<select name="typeEO" id="typeEO" class="form-control">
+			<p>Выберите тип оборудования</p>
+			<select name="typeEO" id="typeEO" class="form-control mb-1">
 				@foreach ($typesEO AS $id => $typeEO)
 					<option value="{{$id}}">{{($typeEO)}}</option>
 				@endforeach
 			</select>
-			<select name="typeProt" id="typeProt" class="form-control">
+			<p>Выберите тип защиты</p>
+			<select name="typeProt" id="typeProt" class="form-control mb-1">
 				@foreach ($typeProt AS $id => $prot)
 					<option value="{{$id}}">{{($prot)}}</option>
 				@endforeach
+			</select>
+			<p>Выберите материал линии</p>
+			<select name="material" id="material" class="form-control mb-1">
+				<option value="Cu">Медь</option>
+				<option value="Al">Аллюминий</option>
 			</select>
 			<button type="submit" class="btn btn-success mt-3">Рассчитать</button>
 			@csrf
