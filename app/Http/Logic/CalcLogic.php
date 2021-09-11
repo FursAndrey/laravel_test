@@ -49,7 +49,6 @@ final class CalcLogic
 		$pto25 = 17;
 		$pto40 = 18;
 		$svarka = [19, 20, 21, 22, 23];
-		$eo1f = [25, 26, 27, 28, 29];
 
 		if (in_array($typeEO, [$pto25, $pto40])) {
 			//задаем продолжительность включения в процентах
@@ -62,7 +61,7 @@ final class CalcLogic
 		} elseif (in_array($typeEO, $svarka)) {
 			//расчет для сварочного оборудования
 			$amperage = self::amperageSvarka($power);
-		} elseif (in_array($typeEO, $eo1f)) {
+		} elseif (self::is_1F($typeEO)) {
 			//расчет для бытового однофазного оборудования
 			$cos = ReferenceLogic::getCosThisEO($typeEO);
 
@@ -113,6 +112,7 @@ final class CalcLogic
 
 	/**	расчет силы тока однофазного бытового оборудования
 	 * 	@param float $P - номинальная мощность однофазного бытового оборудования
+	 * 	@param int $typeEO - тип ЭО
 	 * 	@param float $cos - коэффициент мощности
 	 * 
 	 * 	@return float - номинальная сила тока
@@ -133,10 +133,92 @@ final class CalcLogic
 	 * 						'material' => материал кабеля
 	 * 					]
 	 */
-	public static function getLineParams($I, $material = 'Cu') {
+	public static function getLineParams(
+		float $I, 
+		float $typeEO, 
+		string $material = 'Cu', 
+		float $lineLength = 10
+	):array {		
+		$cos = ReferenceLogic::getCosThisEO($typeEO);
+
 		$result = ReferenceLogic::getLineParams($I, $material);
 		$result['material'] = $material;
+		//сохраняем длину в `м` для вывода результата
+		$result['lineLength'] = $lineLength;
+		$result['iLine'] = $result['countParalelLine']*$result['iKabel'];
+		
+		//переводим из `м` в `км`
+		$lineLength = $lineLength / 1000;
+
+		$resist = ReferenceLogic::getResistance($result['sLine'], $result['material']);
+
+		if (self::is_1F($typeEO)) {
+			$result['voltLoss'] = self::getVoltLoss1F($I, $cos, $resist, $lineLength, $result['countParalelLine']);
+		} else {
+			$result['voltLoss'] = self::getVoltLoss3F($I, $cos, $resist, $lineLength, $result['countParalelLine']);
+		}
+		
 		return $result;
+	}
+
+	/**	потеря напряжения в 3-фазной сети
+	 * 	@param float $I - рачетная сила тока для кабеля
+	 * 	@param float $cos - коэффициент мощности
+	 * 	@return array - массив сопротивлений ['R' => ..., 'X' => ...]
+	 * 	@param float $L - длина линии
+	 * 	@param int $countlLine - кол-во парал. кабелей
+	 * 
+	 * 	@return float - потеря напряжения в %
+	 */
+	private static function getVoltLoss3F(
+		float $I, 
+		float $cos,
+		array $r,
+		float $L,
+		int $countlLine
+	):float {
+		//переводим из `кВ` в `В`
+		$U = self::VOLTAGE_3F * 1000;
+		$sin = sin(acos($cos));
+		$voltLoss = (sqrt(3) * 100 * $I * $L * ($r['R']*$cos + $r['X']*$sin)) / ($U * $countlLine);
+		return round($voltLoss, 2);
+	}
+	
+	/**	потеря напряжения в 3-фазной сети
+	 * 	@param float $I - рачетная сила тока для кабеля
+	 * 	@param float $cos - коэффициент мощности
+	 * 	@return array - массив сопротивлений ['R' => ..., 'X' => ...]
+	 * 	@param float $L - длина линии
+	 * 	@param int $countlLine - кол-во парал. кабелей
+	 * 
+	 * 	@return float - потеря напряжения в %
+	 */
+	private static function getVoltLoss1F(
+		float $I, 
+		float $cos,
+		array $r,
+		float $L,
+		int $countlLine
+	):float {
+		//переводим из `кВ` в `В`
+		$U = self::VOLTAGE_1F * 1000;
+		$sin = sin(acos($cos));
+		$voltLoss = (2 * 100 * $I * $L * ($r['R']*$cos + $r['X']*$sin)) / ($U*$cos * $countlLine);
+		return round($voltLoss, 2);
+	}
+
+	/**	проверка, является ли ЭО 1-фазным
+	 * 	@param int $typeEO - тип ЭО
+	 * 
+	 * 	@return bool - да/нет
+	*/
+	private static function is_1F($typeEO):bool {
+		$eo1f = [25, 26, 27, 28, 29];
+		if (in_array($typeEO, $eo1f)) {
+			return true;
+		} else {
+			return false;
+		}		
 	}
 }
 

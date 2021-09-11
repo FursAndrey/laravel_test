@@ -79,7 +79,7 @@ final class ReferenceLogic extends ReferenceBook
 	 * 						'sLine' => сечение 1 кабеля
 	 * 					]
 	 */
-	public static function getLineParams($I, $material = 'Cu') {
+	public static function getLineParams(float $I, string $material = 'Cu'):array {
 		//подбираем сечение кабеля по току - минимальный больше номинального тока ЭО
 		//цикл для расчета количества паралельных проводников
 		$countParalelLine = 0;
@@ -91,19 +91,32 @@ final class ReferenceLogic extends ReferenceBook
 			//цикл для выбора сечения проводника
 			do {
 				if ($index == count(self::KABEL_PVH)) break;
-				$iLine = self::KABEL_PVH[$index][$material];
+				$iKabel = self::KABEL_PVH[$index][$material];
 
 				++$index;
 
-			} while ($I/$countParalelLine > $iLine);
+			} while ($I/$countParalelLine > $iKabel);
 			--$index;
 
 		} while ($I > self::KABEL_PVH[$index][$material] * $countParalelLine);
 
 		return [
 			'countParalelLine' => $countParalelLine, 
-			'iLine' => $iLine, 
+			'iKabel' => $iKabel, 
 			'sLine' => self::KABEL_PVH[$index]['s']
 		];
-    }
+	}
+	
+	/**	получить погонные сопротивления для проводов и кабелей
+	 * 	@param float $sLine - сечение кабеля
+	 * 	@param string $material - материал кабеля
+	 * 	
+	 * 	@return array - массив сопротивлений ['R' => ..., 'X' => ...]
+	 */
+	public static function getResistance(float $sLine, string $material = 'Cu'):array {
+		$str = 'R_'.$material;
+		$R = self::RESISTANCE["$sLine"]["$str"];
+		$X = self::RESISTANCE["$sLine"]['X'];
+		return ['X' => $X, 'R' => $R];
+	}
 }

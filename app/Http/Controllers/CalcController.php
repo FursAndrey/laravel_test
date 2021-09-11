@@ -15,10 +15,11 @@ class CalcController extends Controller
 		$typeEO = $req['typeEO'];
 		$typeProt = $req['typeProt'];
 		$material = $req['material'];
+		$lineLength = $req['lineLength'];
 
 		$amperageEO = CalcLogic::amperage($power, $typeEO);
 		$amperageProtection = CalcLogic::amperageProtection($amperageEO, $typeProt);
-		$lineParams = CalcLogic::getLineParams($amperageProtection, $material);
+		$lineParams = CalcLogic::getLineParams($amperageProtection, $typeEO, $material, $lineLength);
 
 		return view(
 			'calc_result',
@@ -48,7 +49,7 @@ git remote add origin https://github.com/FursAndrey/laravel_test.git
 git push -u origin main
 
 //push an existing repository from the command line
-git remote add origin https://github.com/FursAndrey/laravel_test.git
+(не обязательно) git remote add origin https://github.com/FursAndrey/laravel_test.git
 git branch -M main
 git push -u origin main
 */

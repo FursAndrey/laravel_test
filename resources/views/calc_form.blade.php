@@ -35,6 +35,8 @@
 				<option value="Cu">Медь</option>
 				<option value="Al">Аллюминий</option>
 			</select>
+			<label for="lineLength">Введите длину линии</label>
+			<input type="text" name="lineLength" id="lineLength" class="form-control mb-1">
 			<button type="submit" class="btn btn-success mt-3">Рассчитать</button>
 			@csrf
 		</div>

@@ -30,17 +30,29 @@ class CalcLogicTest extends TestCase
 		//автоматы
 		$this->assertEquals(10, CalcLogic::amperageProtection(5, 1));
 		$this->assertEquals(12.5, CalcLogic::amperageProtection(11, 1));
-		$this->assertEquals(0, CalcLogic::amperageProtection(165, 1));
+		$this->assertEquals(200, CalcLogic::amperageProtection(165, 1));
+		$this->assertEquals(630, CalcLogic::amperageProtection(627.6, 1));
+		$this->assertEquals(0, CalcLogic::amperageProtection(630.8, 1));
 		//предохранители
 		$this->assertEquals(50, CalcLogic::amperageProtection(15.7, 2));
-		$this->assertEquals(0, CalcLogic::amperageProtection(51.8, 2));
+		$this->assertEquals(200, CalcLogic::amperageProtection(51.8, 2));
+		$this->assertEquals(630, CalcLogic::amperageProtection(200.8, 2));
+		$this->assertEquals(0, CalcLogic::amperageProtection(202.4, 2));
 	}
 	
 	/** @return void */
 	public function testLineParams() {
 		$this->assertEquals(
-			['countParalelLine' => 1, 'iLine' => 19, 'sLine' => 1.5, 'material' => 'Cu'], 
-			CalcLogic::getLineParams(16, 'Cu')
+			[
+				'countParalelLine' => 1, 
+				'iLine' => 19, 
+				'iKabel' => 19, 
+				'sLine' => 1.5, 
+				'material' => 'Cu', 
+				'lineLength' => 10,
+				'voltLoss' => 0.45
+			], 
+			CalcLogic::getLineParams(16, 0, 'Cu', 10)
 		);
 	}
 }
