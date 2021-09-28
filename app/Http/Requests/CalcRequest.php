@@ -24,15 +24,19 @@ class CalcRequest extends FormRequest
     public function rules()
     {
         return [
-            'power'=>'required|numeric'
+            'power'=>'required|numeric',
+            'lineLength'=>'required|numeric'
         ];
     }
 
     public function messages()
     {
         return [
-            'power.required' => 'Поле мощность оборудования является обязательным',
-            'power.numeric' => 'Поле мощность оборудования может содержать только цифры 
+            'power.required' => 'Поле `мощность оборудования` является обязательным',
+            'power.numeric' => 'Поле `мощность оборудования` может содержать только цифры 
+                и 1 точку как отделитель дробной части',
+            'lineLength.required' => 'Поле `длина линии` является обязательным',
+            'lineLength.numeric' => 'Поле `длина линии` может содержать только цифры 
                 и 1 точку как отделитель дробной части'
         ];
     }

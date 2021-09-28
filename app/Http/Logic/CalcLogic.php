@@ -17,26 +17,6 @@ final class CalcLogic
 		return round(self::VOLTAGE_3F,2).'/'.round(self::VOLTAGE_1F,2);
 	}
 
-	/**	выбор аппарата защиты
-	 * 	@param float $I- номинальная сила тока ЭО
-	 * 	@param int $typeProt - тип аппарата защиты
-	 * 
-	 * 	@return float - номинальная сила тока аппарата защиты
-	 */
-	public static function amperageProtection(float $I, int $typeProt):float {
-		if ($typeProt == 1) {
-			//расчет тока автоматического выключателя
-			return ReferenceLogic::getAmperAB($I);
-		} elseif ($typeProt == 2) {
-			//расчет тока плавкого предохранителя
-
-			//расчет пикового (пускового) тока
-			$K_PUSK = 5;
-			$Ipusk = $I*$K_PUSK;
-			return ReferenceLogic::getAmperPP($Ipusk);
-		}
-	}
-
 	/** расчет силы тока ЭО
 	 * 	@param float $power - номинальная активкая мощность ЭО
 	 * 	@param int $typeEO - тип ЭО
@@ -121,6 +101,26 @@ final class CalcLogic
 		return round($P/(self::VOLTAGE_1F*$cos), 1);
 	}
 	
+	/**	выбор аппарата защиты
+	 * 	@param float $I- номинальная сила тока ЭО
+	 * 	@param int $typeProt - тип аппарата защиты
+	 * 
+	 * 	@return float - номинальная сила тока аппарата защиты
+	 */
+	public static function amperageProtection(float $I, int $typeProt):float {
+		if ($typeProt == 1) {
+			//расчет тока автоматического выключателя
+			return ReferenceLogic::getAmperAB($I);
+		} elseif ($typeProt == 2) {
+			//расчет тока плавкого предохранителя
+			
+			//расчет пикового (пускового) тока
+			$K_PUSK = 5;
+			$Ipusk = $I*$K_PUSK;
+			return ReferenceLogic::getAmperPP($Ipusk);
+		}
+	}
+
 	/** расчет кабельной линии
 	 * 	@param float $I - рачетная сила тока для кабеля
 	 * 	@param string $material - материал линии ('Cu' - медь, 'Al' - аллюминий)

@@ -52,7 +52,7 @@ final class ReferenceLogic extends ReferenceBook
 	 * 	@return float - номинальная сила тока ПП
 	 */
 	public static function getAmperPP(float $I):float {
-		$Ipp = $I/1.6;
+		$Ipp = $I/2.5;
 		for ($i = 0; $i < count(self::I_PP); $i++) {
 			if (self::I_PP[$i] > $Ipp) {
 				return self::I_PP[$i];

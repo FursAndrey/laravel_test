@@ -7,6 +7,8 @@ use App\Http\Logic\CalcLogic;
 
 class CalcLogicTest extends TestCase
 {
+	private const PROT_AB = 1;
+	private const PROT_PP = 2;
 	/** @return void */
 	public function testAmperage()
 	{
@@ -28,16 +30,16 @@ class CalcLogicTest extends TestCase
 	/** @return void */
 	public function testAmperageProtection() {
 		//автоматы
-		$this->assertEquals(10, CalcLogic::amperageProtection(5, 1));
-		$this->assertEquals(12.5, CalcLogic::amperageProtection(11, 1));
-		$this->assertEquals(200, CalcLogic::amperageProtection(165, 1));
-		$this->assertEquals(630, CalcLogic::amperageProtection(627.6, 1));
-		$this->assertEquals(0, CalcLogic::amperageProtection(630.8, 1));
+		$this->assertEquals(10, CalcLogic::amperageProtection(5, self::PROT_AB));
+		$this->assertEquals(12.5, CalcLogic::amperageProtection(11, self::PROT_AB));
+		$this->assertEquals(200, CalcLogic::amperageProtection(165, self::PROT_AB));
+		$this->assertEquals(630, CalcLogic::amperageProtection(627.6, self::PROT_AB));
+		$this->assertEquals(0, CalcLogic::amperageProtection(630.8, self::PROT_AB));
 		//предохранители
-		$this->assertEquals(50, CalcLogic::amperageProtection(15.7, 2));
-		$this->assertEquals(200, CalcLogic::amperageProtection(51.8, 2));
-		$this->assertEquals(630, CalcLogic::amperageProtection(200.8, 2));
-		$this->assertEquals(0, CalcLogic::amperageProtection(202.4, 2));
+		$this->assertEquals(32, CalcLogic::amperageProtection(15.8, self::PROT_PP));
+		$this->assertEquals(125, CalcLogic::amperageProtection(62, self::PROT_PP));
+		$this->assertEquals(630, CalcLogic::amperageProtection(313.8, self::PROT_PP));
+		$this->assertEquals(0, CalcLogic::amperageProtection(315, self::PROT_PP));
 	}
 	
 	/** @return void */

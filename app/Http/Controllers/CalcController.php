@@ -31,6 +31,7 @@ class CalcController extends Controller
 					'typeProt'=> ReferenceLogic::getProtLiat()[$typeProt]
 				],
 				'result' => [
+					'typeEO' => $typeEO,
 					'amperageEO' => $amperageEO,
 					'amperageProtection' => $amperageProtection,
 					'lineParams' => $lineParams
