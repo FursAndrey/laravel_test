@@ -25,7 +25,7 @@ Route::get('/calc', function () {
         'calc_form', 
         [
             'typesEO' => ReferenceLogic::getListTypeEO(),
-            'typeProt' => ReferenceLogic::getProtLiat()
+            'typeProt' => ReferenceLogic::getProtList()
         ]
     );
 })->name('calc-form');

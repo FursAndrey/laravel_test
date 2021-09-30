@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\CalcRequest;
 
-use App\Http\Logic\CalcLogic;
-use App\Http\Logic\ReferenceLogic;
+use App\Http\Logic\Calc;
 
 class CalcController extends Controller
 {
@@ -16,26 +14,12 @@ class CalcController extends Controller
 		$typeProt = $req['typeProt'];
 		$material = $req['material'];
 		$lineLength = $req['lineLength'];
-
-		$amperageEO = CalcLogic::amperage($power, $typeEO);
-		$amperageProtection = CalcLogic::amperageProtection($amperageEO, $typeProt);
-		$lineParams = CalcLogic::getLineParams($amperageProtection, $typeEO, $material, $lineLength);
-
+		
 		return view(
 			'calc_result',
 			[
-				'systemData' => CalcLogic::getDataSystem(),
-				'initialData' => [
-					'power' => $power,
-					'typeEO' => ReferenceLogic::getListTypeEO()[$typeEO],
-					'typeProt'=> ReferenceLogic::getProtLiat()[$typeProt]
-				],
-				'result' => [
-					'typeEO' => $typeEO,
-					'amperageEO' => $amperageEO,
-					'amperageProtection' => $amperageProtection,
-					'lineParams' => $lineParams
-				]
+				'initialData' => Calc::getInitialData($power, $typeEO, $typeProt),
+				'result' => Calc::getCalcResult($power, $typeEO, $typeProt, $material, $lineLength)
 			]
 		);
 	}
@@ -50,7 +34,8 @@ git remote add origin https://github.com/FursAndrey/laravel_test.git
 git push -u origin main
 
 //push an existing repository from the command line
-(не обязательно) git remote add origin https://github.com/FursAndrey/laravel_test.git
+git add .
+git commit -m "test and validation correction"
 git branch -M main
 git push -u origin main
 */

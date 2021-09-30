@@ -64,7 +64,7 @@ final class ReferenceLogic extends ReferenceBook
 	/**	Получить список типов аппаратов защиты
 	 * 	@return array - список типов аппаратов защиты
 	 */
-	public static function getProtLiat():array {
+	public static function getProtList():array {
 		return self::TYPE_PROT;
 	}
 
