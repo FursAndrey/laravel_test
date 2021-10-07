@@ -8,7 +8,7 @@
 		<p>Параметры системы:</p>
 		<p>Напряжение сети 3Ф/1Ф - {{$initialData['systemVolt']}}кВ</p>
 	</div>
-	<div class="pt-3 pb-3 mb-2 bg-success text-white row" style="margin-left: 0; margin-right: 0;">
+	<div class="pt-3 pb-3 mb-2 ml-0 mr-0 bg-success text-white row">
 		<div class="col-3 d-inline-block" >
 			<p><b>Тип защиты:</b> {{$initialData['typeProtText']}}</p>
 			<p><b>Cила тока аппарата защиты:</b> {{$result['amperageProtection']}}A</p>
