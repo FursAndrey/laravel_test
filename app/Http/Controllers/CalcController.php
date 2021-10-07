@@ -35,7 +35,7 @@ git push -u origin main
 
 //push an existing repository from the command line
 git add .
-git commit -m "test and validation correction"
+git commit -m "calc volt loss correction"
 git branch -M main
 git push -u origin main
 */

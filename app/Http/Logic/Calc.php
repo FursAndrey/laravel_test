@@ -46,8 +46,9 @@ final class Calc
 		float $lineLength
 	):array {		
 		$amperageEO = Amperage::amperage($power, $typeEO);
-		$amperageProtection = Protect::amperageProtection($amperageEO, $typeProt);
-		$lineParams = Line::getLineParams($amperageProtection, $typeEO, $material, $lineLength);
+		$amperageProtection = Protect::amperageProtection($amperageEO, $typeProt, $typeEO);
+		$lineParams = Line::getLineParams($amperageProtection, $material, $lineLength);
+		$lineParams['voltLoss'] = line::getVoltLoss($amperageEO, $typeEO, $material, $lineLength);
 
 		return [
 			'typeEO' => $typeEO /* для настройки тестов */,

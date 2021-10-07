@@ -16,10 +16,14 @@ class LineTest extends TestCase
 				'iKabel' => 19, 
 				'sLine' => 1.5, 
 				'material' => 'Cu', 
-				'lineLength' => 10,
-				'voltLoss' => 0.45
+				'lineLength' => 10
 			], 
-			Line::getLineParams(16, 0, 'Cu', 10)
+			Line::getLineParams(16, 'Cu', 10)
 		);
+	}
+	
+	/** @return void */
+	public function testVoltLoss() {
+		$this->assertEquals(0.45, Line::getVoltLoss(16, 0, 'Cu', 10));
 	}
 }

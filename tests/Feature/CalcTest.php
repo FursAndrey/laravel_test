@@ -60,7 +60,7 @@ class CalcTest extends TestCase
 						'material' => 'Cu',
 						'lineLength' => 10,
 						'iLine' => 25,
-						'voltLoss' => 0.42
+						'voltLoss' => 0.4
 					]
 			], 
 			Calc::getCalcResult(15, 0, self::PROT_AB, 'Cu', 10)
@@ -77,7 +77,7 @@ class CalcTest extends TestCase
 						'material' => 'Al',
 						'lineLength' => 34,
 						'iLine' => 220,
-						'voltLoss' => 0.93
+						'voltLoss' => 0.86
 					]
 			], 
 			Calc::getCalcResult(100, 12, self::PROT_AB, 'Al', 34)
@@ -86,15 +86,15 @@ class CalcTest extends TestCase
 			[
 				'typeEO' => 26,
 				'amperageEO' => 65,
-				'amperageProtection' => 160,
+				'amperageProtection' => 80,
 				'lineParams' => [
 						'countParalelLine' => 1,
-						'iKabel' => 180,
-						'sLine' => 70,
+						'iKabel' => 95,
+						'sLine' => 25,
 						'material' => 'Cu',
 						'lineLength' => 34,
-						'iLine' => 180,
-						'voltLoss' => 1.74
+						'iLine' => 95,
+						'voltLoss' => 2.68
 					]
 			], 
 			Calc::getCalcResult(10, 26, self::PROT_PP, 'Cu', 34)

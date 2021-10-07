@@ -8,7 +8,6 @@ final class Line
 {
 	/** расчет кабельной линии
 	 * 	@param float $I - рачетная сила тока для кабеля
-	 * 	@param int $typeEO - тип ЭО
 	 * 	@param string $material - материал линии ('Cu' - медь, 'Al' - аллюминий)
 	 * 	@param float $lineLength - длина линии
 	 * 
@@ -22,30 +21,43 @@ final class Line
 	 */
 	public static function getLineParams(
 		float $I, 
-		float $typeEO, 
 		string $material = 'Cu', 
 		float $lineLength = 10
-	):array {		
-		$cos = ReferenceLogic::getCosThisEO($typeEO);
-
+	):array {
 		$result = ReferenceLogic::getLineParams($I, $material);
 		$result['material'] = $material;
-		//сохраняем длину в `м` для вывода результата
 		$result['lineLength'] = $lineLength;
 		$result['iLine'] = $result['countParalelLine']*$result['iKabel'];
 		
+		return $result;
+	}
+
+	/** расчет потери напряжения кабельной линии
+	 * 	@param float $I - рачетная сила тока оборудования
+	 * 	@param int $typeEO - тип ЭО
+	 * 	@param string $material - материал линии ('Cu' - медь, 'Al' - аллюминий)
+	 * 	@param float $lineLength - длина линии
+	 * 
+	 * 	@return float - потеря напряжения в %
+	 */
+	public static function getVoltLoss(
+		float $I, 
+		float $typeEO, 
+		string $material = 'Cu', 
+		float $lineLength = 10
+	):float {
+		$result = ReferenceLogic::getLineParams($I, $material);
 		//переводим из `м` в `км`
 		$lineLength = $lineLength / 1000;
 
-		$resist = ReferenceLogic::getResistance($result['sLine'], $result['material']);
+		$cos = ReferenceLogic::getCosThisEO($typeEO);
+		$resist = ReferenceLogic::getResistance($result['sLine'], $material);
 
 		if (Calc::is_1F($typeEO)) {
-			$result['voltLoss'] = self::getVoltLoss1F($I, $cos, $resist, $lineLength, $result['countParalelLine']);
+			return self::getVoltLoss1F($I, $cos, $resist, $lineLength, $result['countParalelLine']);
 		} else {
-			$result['voltLoss'] = self::getVoltLoss3F($I, $cos, $resist, $lineLength, $result['countParalelLine']);
+			return self::getVoltLoss3F($I, $cos, $resist, $lineLength, $result['countParalelLine']);
 		}
-		
-		return $result;
 	}
 
 	/**	потеря напряжения в 3-фазной сети
