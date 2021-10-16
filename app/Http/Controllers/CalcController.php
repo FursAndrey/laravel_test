@@ -3,23 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CalcRequest;
-
 use App\Http\Logic\Calc;
 
 class CalcController extends Controller
 {
-	public function submit(CalcRequest $req) {
-		$power = $req['power'];
-		$typeEO = $req['typeEO'];
-		$typeProt = $req['typeProt'];
-		$material = $req['material'];
-		$lineLength = $req['lineLength'];
+	public function submit(CalcRequest $request) {
+		$req = $request['calc'];
+
+		$power = $req[0]['power'];
+		$typeEO = $req[0]['typeEO'];
+		$typeProt = $req[0]['typeProt'];
+		$material = $req[0]['material'];
+		$lineLength = $req[0]['lineLength'];
 		
+		$initialData = Calc::getInitialData($power, $typeEO, $typeProt);
+		$result = Calc::getCalcResult($power, $typeEO, $typeProt, $material, $lineLength);
+
 		return view(
 			'calc_result',
 			[
-				'initialData' => Calc::getInitialData($power, $typeEO, $typeProt),
-				'result' => Calc::getCalcResult($power, $typeEO, $typeProt, $material, $lineLength)
+				'initialData' => $initialData,
+				'result' => $result
 			]
 		);
 	}
@@ -35,7 +39,7 @@ git push -u origin main
 
 //push an existing repository from the command line
 git add .
-git commit -m "calc volt loss correction"
+git commit -m "change request and validation"
 git branch -M main
 git push -u origin main
 */
