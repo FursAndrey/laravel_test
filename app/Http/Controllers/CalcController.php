@@ -9,20 +9,11 @@ class CalcController extends Controller
 {
 	public function submit(CalcRequest $request) {
 		$req = $request['calc'];
-
-		$power = $req[0]['power'];
-		$typeEO = $req[0]['typeEO'];
-		$typeProt = $req[0]['typeProt'];
-		$material = $req[0]['material'];
-		$lineLength = $req[0]['lineLength'];
-		
-		$initialData = Calc::getInitialData($power, $typeEO, $typeProt);
-		$result = Calc::getCalcResult($power, $typeEO, $typeProt, $material, $lineLength);
+		$result = Calc::startCalc($req);
 
 		return view(
 			'calc_result',
 			[
-				'initialData' => $initialData,
 				'result' => $result
 			]
 		);
@@ -39,7 +30,7 @@ git push -u origin main
 
 //push an existing repository from the command line
 git add .
-git commit -m "change request and validation"
+git commit -m "loop calc"
 git branch -M main
 git push -u origin main
 */

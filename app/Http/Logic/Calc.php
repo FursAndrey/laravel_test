@@ -13,23 +13,86 @@ final class Calc
 	/** @var float - номинальное напряжение однофазной сети */
 	public const VOLTAGE_1F = self::VOLTAGE_3F / 1.73;
 
+	/**	запуск расчетов
+	 * 	@param array - массив входных данных в формате 
+	 * 	[0] => [
+	 * 		'power'=?,
+	 * 		'typeEO'=?,
+	 * 		'typeProt'=?,
+	 * 		'material'=?,
+	 * 		'lineLength'=?
+	 * 	],
+	 * 	[1] => [...],
+	 * 	...
+	 * 
+	 * 	@return array - массив выходных данных в формате
+	 * 	[
+	 * 		'systemData' => ['systemVolt' = string],
+	 * 		'initialData' => [
+	 * 			[0] => [
+	 * 				'power' = float,
+	 * 				'typeEO' => string, 
+	 * 				'typeProt'=> string
+	 * 			],
+	 * 			[1] => [...],
+	 * 			...
+	 * 		],
+	 * 		'calcResult' => [
+	 * 			[0] => [
+	 * 				'amperageEO' => float, 
+	 * 				'amperageProtection' => float, 
+	 * 				'lineParams' => array[]
+	 * 			],
+	 * 			[1] => [...],
+	 * 			...
+	 * 		]
+	 * 	]
+	 */
+	public static function startCalc(array $req):array {
+		$systemData = self::getSystemData();
+		for ($numOfEo = 0; $numOfEo < count($req); $numOfEo++) { 
+			$power = $req[$numOfEo]['power'];
+			$typeEO = $req[$numOfEo]['typeEO'];
+			$typeProt = $req[$numOfEo]['typeProt'];
+			$material = $req[$numOfEo]['material'];
+			$lineLength = $req[$numOfEo]['lineLength'];
+			
+			$initialData[$numOfEo] = self::getInitialData($power, $typeEO, $typeProt);
+			$result[$numOfEo] = self::getCalcResult($power, $typeEO, $typeProt, $material, $lineLength);
+		}
+
+		return [
+			'systemData' => $systemData,
+			'initialData' => $initialData,
+			'calcResult' => $result
+		];
+	}
+
 	/**	получить исходные данные расчета
 	 * 	@param float $power - номинальная активкая мощность ЭО
 	 * 	@param int $typeEO - тип ЭО
 	 * 	@param int $typeProt - тип аппарата защиты
 	 * 
-	 * 	@return array - 'systemVolt' => string, 'power' => float, 'typeEO' => string, 'typeProt'=> string
+	 * 	@return array - 'power' => float, 'typeEO' => string, 'typeProt'=> string
 	 */
-	public static function getInitialData(float $power, int $typeEO, int $typeProt):array {
+	private static function getInitialData(float $power, int $typeEO, int $typeProt):array {
 		return [
-			'systemVolt' => round(self::VOLTAGE_3F,2).'/'.round(self::VOLTAGE_1F,2),
 			'power' => $power,
 			'typeEOText' => ReferenceLogic::getListTypeEO()[$typeEO],
 			'typeProtText'=> ReferenceLogic::getProtList()[$typeProt]
 		];
 	}
 
-	/**	получить исходные данные расчета
+	/**	получить общие данные для системы
+	 * 	@return array - 'systemVolt' => string
+	 */
+	private static function getSystemData():array {
+		return [
+			'systemVolt' => round(self::VOLTAGE_3F,2).'/'.round(self::VOLTAGE_1F,2)
+		];
+	}
+
+	/**	получить результаты расчета
 	 * 	@param float $power - номинальная активкая мощность ЭО
 	 * 	@param int $typeEO - тип ЭО
 	 * 	@param int $typeProt - тип аппарата защиты
@@ -38,7 +101,7 @@ final class Calc
 	 * 
 	 * 	@return array - 'amperageEO' => float, 'amperageProtection' => float, 'lineParams' => array[]
 	 */
-	public static function getCalcResult(
+	private static function getCalcResult(
 		float $power, 
 		int $typeEO, 
 		int $typeProt, 
