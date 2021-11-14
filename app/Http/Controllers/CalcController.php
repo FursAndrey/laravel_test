@@ -8,24 +8,18 @@ use App\Http\Logic\Calc;
 class CalcController extends Controller
 {
 	public function submit(CalcRequest $request) {
-		$arr_power = $request['power'];
-		$arr_type_eo = $request['typeEO'];
-		$arr_type_prot = $request['typeProt'];
-		$arr_material = $request['material'];
-		$arr_line_length = $request['lineLength'];
-
 		if (
-			count($arr_power) == count($arr_type_eo)
-			&& count($arr_power) == count($arr_type_prot)
-			&& count($arr_power) == count($arr_material)
-			&& count($arr_power) == count($arr_line_length)
+			count($request['power']) == count($request['typeEO'])
+			&& count($request['power']) == count($request['typeProt'])
+			&& count($request['power']) == count($request['material'])
+			&& count($request['power']) == count($request['lineLength'])
 		) {
-			for ($i = 0; $i < count($arr_power); $i++) { 
-				$req[$i]['power'] = $arr_power[$i];
-				$req[$i]['typeEO'] = $arr_type_eo[$i];
-				$req[$i]['typeProt'] = $arr_type_prot[$i];
-				$req[$i]['material'] = $arr_material[$i];
-				$req[$i]['lineLength'] = $arr_line_length[$i];
+			for ($i = 0; $i < count($request['power']); $i++) {
+				$req[$i]['power'] = $request['power'][$i];
+				$req[$i]['typeEO'] = $request['typeEO'][$i];
+				$req[$i]['typeProt'] = $request['typeProt'][$i];
+				$req[$i]['material'] = $request['material'][$i];
+				$req[$i]['lineLength'] = $request['lineLength'][$i];
 			}
 		} else {
 			echo "Error";
