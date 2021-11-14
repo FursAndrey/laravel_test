@@ -15,6 +15,7 @@
 				</ol>
 			</div>
 		@endif
+		<button type="button" id="add_next_eo" class="btn btn-info mb-3">Добавить</button>
 		<div class="form-group">
 			<div class="for-copy border rounded border-success p-3 mb-2">
 				<p class="d-flex justify-content-between mb-1">
