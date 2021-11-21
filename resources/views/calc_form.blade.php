@@ -38,35 +38,45 @@
 				<p class="d-flex justify-content-between mb-1">
 					<label for="power_{{ $id_eo }}" class="col-3">Мощность оборудования</label>
 					<input type="text" name="power[]" id="power_{{ $id_eo }}" 
-						class="form-control col-9" value="{{ $arr_power[$id_eo] }}">
+						class="form-control col-9 change-id" value="{{ $arr_power[$id_eo] }}">
 				</p>
 				<p class="d-flex justify-content-between mb-1">
 					<label for="typeEO_{{ $id_eo }}" class="col-3">Тип оборудования</label>
-					<select name="typeEO[]" id="typeEO_{{ $id_eo }}" class="form-control col-9">
+					<select name="typeEO[]" id="typeEO_{{ $id_eo }}" class="form-control col-9 change-id">
 						@foreach ($typesEO AS $id => $typeEO)
-							<option value="{{$id}}" <?=($id==$arr_type_eo[$id_eo])?'selected':''?>>{{ $typeEO }}</option>
+							<option value="{{$id}}" <?=($id==$arr_type_eo[$id_eo])?'selected':''?>>
+								{{ $typeEO }}
+							</option>
 						@endforeach
 					</select>
 				</p>
 				<p class="d-flex justify-content-between mb-1">
 					<label for="typeProt_{{ $id_eo }}" class="col-3">Тип защиты</label>
-					<select name="typeProt[]" id="typeProt_{{ $id_eo }}" class="form-control col-9">
+					<select name="typeProt[]" id="typeProt_{{ $id_eo }}" 
+						class="form-control col-9 change-id">
 						@foreach ($typeProt AS $id => $prot)
-							<option value="{{$id}}" <?=($id==$arr_type_prot[$id_eo])?'selected':''?>>{{ $prot }}</option>
+							<option value="{{$id}}" <?=($id==$arr_type_prot[$id_eo])?'selected':''?>>
+								{{ $prot }}
+							</option>
 						@endforeach
 					</select>
 				</p>
 				<p class="d-flex justify-content-between mb-1">
 					<label for="material_{{ $id_eo }}" class="col-3">Материал линии</label>
-					<select name="material[]" id="material_{{ $id_eo }}" class="form-control col-9">
-						<option value="Cu" <?=('Cu'==$arr_type_prot[$id_eo])?'selected':''?>>Медь</option>
-						<option value="Al" <?=('Al'==$arr_type_prot[$id_eo])?'selected':''?>>Аллюминий</option>
+					<select name="material[]" id="material_{{ $id_eo }}" 
+						class="form-control col-9 change-id">
+						<option value="Cu" <?=('Cu'==$arr_type_prot[$id_eo])?'selected':''?>>
+							Медь
+						</option>
+						<option value="Al" <?=('Al'==$arr_type_prot[$id_eo])?'selected':''?>>
+							Аллюминий
+						</option>
 					</select>
 				</p>
 				<p class="d-flex justify-content-between mb-1">
 					<label for="lineLength_{{ $id_eo }}" class="col-3">Длина линии</label>
 					<input type="text" name="lineLength[]" id="lineLength_{{ $id_eo }}" 
-						class="form-control col-9" value="{{ $arr_line_length[$id_eo] }}">
+						class="form-control col-9 change-id" value="{{ $arr_line_length[$id_eo] }}">
 				</p>
 			</div>
 			@endforeach
