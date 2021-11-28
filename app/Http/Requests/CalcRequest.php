@@ -24,30 +24,30 @@ class CalcRequest extends FormRequest
 	public function rules()
 	{
 		return [
-			'calc.*.power'=>'required|numeric',
-			'calc.*.typeEO'=>'required|integer',
-			'calc.*.typeProt'=>'required|integer|regex:/^[1,2]$/',
-			'calc.*.material'=>'required|max:2|regex:/^(Cu)?(Al)?$/',
-			'calc.*.lineLength'=>'required|numeric'
+			'power.*'=>'required|numeric',
+			'typeEO.*'=>'required|integer',
+			'typeProt.*'=>'required|integer|regex:/^[1,2]$/',
+			'material.*'=>'required|max:2|regex:/^(Cu)?(Al)?$/',
+			'lineLength.*'=>'required|numeric'
 		];
 	}
 
     public function messages()
 	{
 		return [
-			'calc.*.power.required' => 'Поле `мощность оборудования` является обязательным',
-			'calc.*.power.numeric' => 'Поле `мощность оборудования` может содержать только цифры 
+			'power.*.required' => 'Поле `мощность оборудования` является обязательным',
+			'power.*.numeric' => 'Поле `мощность оборудования` может содержать только цифры 
 				и 1 точку как отделитель дробной части',
-			'calc.*.typeEO.required' => 'Поле `тип оборудования` является обязательным',
-			'calc.*.typeEO.integer' => 'Поле `тип оборудования` может содержать только цифры',
-			'calc.*.typeProt.required' => 'Поле `тип оборудования` является обязательным',
-			'calc.*.typeProt.integer' => 'Поле `тип оборудования` может содержать только цифры',
-			'calc.*.typeProt.regex' => 'Поле `тип оборудования` может содержать только цифры 1 или 2',
-			'calc.*.material.required' => 'Поле `Материал линии` является обязательным',
-			'calc.*.material.max' => 'Поле `Материал линии` не может быть более 2 символов',
-			'calc.*.material.regex' => 'Поле `Материал линии` может содержать только Cu,Al',
-			'calc.*.lineLength.required' => 'Поле `длина линии` является обязательным',
-			'calc.*.lineLength.numeric' => 'Поле `длина линии` может содержать только цифры 
+			'typeEO.*.required' => 'Поле `тип оборудования` является обязательным',
+			'typeEO.*.integer' => 'Поле `тип оборудования` может содержать только цифры',
+			'typeProt.*.required' => 'Поле `тип оборудования` является обязательным',
+			'typeProt.*.integer' => 'Поле `тип оборудования` может содержать только цифры',
+			'typeProt.*.regex' => 'Поле `тип оборудования` может содержать только цифры 1 или 2',
+			'material.*.required' => 'Поле `Материал линии` является обязательным',
+			'material.*.max' => 'Поле `Материал линии` не может быть более 2 символов',
+			'material.*.regex' => 'Поле `Материал линии` может содержать только Cu,Al',
+			'lineLength.*.required' => 'Поле `длина линии` является обязательным',
+			'lineLength.*.numeric' => 'Поле `длина линии` может содержать только цифры 
 				и 1 точку как отделитель дробной части'
 		];
 	}

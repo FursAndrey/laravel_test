@@ -8,7 +8,24 @@ use App\Http\Logic\Calc;
 class CalcController extends Controller
 {
 	public function submit(CalcRequest $request) {
-		$req = $request['calc'];
+		if (
+			count($request['power']) == count($request['typeEO'])
+			&& count($request['power']) == count($request['typeProt'])
+			&& count($request['power']) == count($request['material'])
+			&& count($request['power']) == count($request['lineLength'])
+		) {
+			for ($i = 0; $i < count($request['power']); $i++) {
+				$req[$i]['power'] = $request['power'][$i];
+				$req[$i]['typeEO'] = $request['typeEO'][$i];
+				$req[$i]['typeProt'] = $request['typeProt'][$i];
+				$req[$i]['material'] = $request['material'][$i];
+				$req[$i]['lineLength'] = $request['lineLength'][$i];
+			}
+		} else {
+			echo "Error";
+			exit('!!!');
+		}
+		
 		$result = Calc::startCalc($req);
 
 		return view(

@@ -21,31 +21,38 @@
 			</p>
 		</div>
 		<div class="col-3 d-inline-block" >
-			<p><b>Материал линии:</b> {{$result['calcResult'][$numOfEo]['lineParams']['material']}} </p>
-			<p>
-				<b>Кол-во кабелей линии:</b>
-				{{$result['calcResult'][$numOfEo]['lineParams']['countParalelLine']}}
-			</p>
-			<p>
+			<!--p>
+				<b>Материал линии:</b> {{$result['calcResult'][$numOfEo]['lineParams']['material']}} 
+			</p-->
+			<!--p>
 				<b>Номинальный ток 1 кабеля:</b> 
 				{{$result['calcResult'][$numOfEo]['lineParams']['iKabel']}}А
-			</p>
+			</p-->
 			<p>
 				<b>Номинальный ток линии:</b> 
 				{{$result['calcResult'][$numOfEo]['lineParams']['iLine']}}А
 			</p>
 			<p>
-				<b>Сечение 1 кабеля:</b> 
+				<b>Сечение линии:</b> 
+				{{$result['calcResult'][$numOfEo]['lineParams']['countParalelLine']}} x
 				{{$result['calcResult'][$numOfEo]['lineParams']['sLine']}}мм<span class="super">2</span>
 			</p>
+			<!--p>
+				<b>Кол-во кабелей линии:</b>
+				{{$result['calcResult'][$numOfEo]['lineParams']['countParalelLine']}}
+			</p>
+			<p>
+				<b>Сечение 1 кабеля:</b> 
+				{{$result['calcResult'][$numOfEo]['lineParams']['sLine']}}мм<span class="super">2</span>
+			</p-->
 			<p>
 				<b>Длина линии:</b> 
 				{{$result['calcResult'][$numOfEo]['lineParams']['lineLength']}}м
 			</p>
-			<p>
+			<!--p>
 				<b>Потеря напряжения:</b>
 				{{$result['calcResult'][$numOfEo]['lineParams']['voltLoss']}}%
-			</p>
+			</p-->
 		</div>
 		<div class="col-6 d-inline-block" >
 			<p><b>Тип оборудования:</b> {{$result['initialData'][$numOfEo]['typeEOText']}}</p>
@@ -54,9 +61,9 @@
 		</div>
 	</div>
 	@endforeach
-	<pre>
+	<!--pre>
 		{{print_r($result['calcResult'])}}
-	</pre>
+	</pre-->
 	<p class="text-center">
 		<a href="{{ route('calc-form') }}" class="btn btn-primary stretched-link col-10">Новый расчет</a>
 	</p>
