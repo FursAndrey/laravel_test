@@ -15,7 +15,7 @@
 				</ol>
 			</div>
 		@endif
-		<button type="button" id="add_next_eo" class="btn btn-info mb-3">Добавить</button>
+		<button type="button" id="add_next_eo" class="btn btn-info mb-1">Добавить</button>
 		<?
 		$old = old();
 		if ($old != []) {
@@ -34,9 +34,9 @@
 		?>
 		<div class="form-group">
 			@foreach ($arr_power AS $id_eo => $power)
-			<div class="for-copy border rounded border-success p-3 mb-2">
+			<div class="for-copy border rounded border-success p-2 mb-1">
 				<p class="d-flex justify-content-between mb-1">
-					<label for="power_{{ $id_eo }}" class="col-3">Мощность оборудования</label>
+					<label for="power_{{ $id_eo }}" class="col-3">Мощность</label>
 					<input type="text" name="power[]" id="power_{{ $id_eo }}" 
 						class="form-control col-9 change-id" value="{{ $arr_power[$id_eo] }}">
 				</p>
@@ -80,7 +80,7 @@
 				</p>
 			</div>
 			@endforeach
-			<button type="submit" class="btn btn-success mt-3">Рассчитать</button>
+			<button type="submit" class="btn btn-success">Рассчитать</button>
 			@csrf
 		</div>
 	</form>

@@ -9,7 +9,7 @@
 		<script src="{{asset('js/my.js')}}"></script>
 		<title>@yield('head_title')</title>
 	</head>
-	<body class="m-5">
+	<body class="m-2">
 		@yield('content')
 	</body>
 </html>
