@@ -49,7 +49,8 @@ class CalcTest extends TestCase
 						'voltLoss' => 1.21
 					]
 				]
-			]
+			],
+			'general' => 12
 		];
 
 		$this->assertEquals($outptData, Calc::startCalc($inptData));
@@ -117,7 +118,8 @@ class CalcTest extends TestCase
 						'voltLoss' => 0.51
 					]
 				]
-			]
+			],
+			'general' => 44
 		];
 
 		$this->assertEquals($outptData, Calc::startCalc($inptData));

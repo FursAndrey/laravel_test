@@ -50,21 +50,25 @@ final class Calc
 	 */
 	public static function startCalc(array $req):array {
 		$systemData = self::getSystemData();
+		$generalPower = 0;
 		for ($numOfEo = 0; $numOfEo < count($req); $numOfEo++) { 
 			$power = $req[$numOfEo]['power'];
 			$typeEO = $req[$numOfEo]['typeEO'];
 			$typeProt = $req[$numOfEo]['typeProt'];
 			$material = $req[$numOfEo]['material'];
 			$lineLength = $req[$numOfEo]['lineLength'];
-			
+
 			$initialData[$numOfEo] = self::getInitialData($power, $typeEO, $typeProt);
 			$result[$numOfEo] = self::getCalcResult($power, $typeEO, $typeProt, $material, $lineLength);
+			
+			$generalPower += $power;
 		}
 
 		return [
 			'systemData' => $systemData,
 			'initialData' => $initialData,
-			'calcResult' => $result
+			'calcResult' => $result,
+			'general' => $generalPower
 		];
 	}
 
